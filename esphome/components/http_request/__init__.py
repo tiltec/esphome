@@ -86,6 +86,7 @@ CONFIG_SCHEMA = cv.All(
     cv.require_framework_version(
         esp8266_arduino=cv.Version(2, 5, 1),
         esp32_arduino=cv.Version(0, 0, 0),
+        bk72xx_arduino=cv.Version(1, 4, 1),
     ),
 )
 
@@ -100,7 +101,7 @@ async def to_code(config):
     if CORE.is_esp8266 and not config[CONF_ESP8266_DISABLE_SSL_SUPPORT]:
         cg.add_define("USE_HTTP_REQUEST_ESP8266_HTTPS")
 
-    if CORE.is_esp32:
+    if CORE.is_esp32 or CORE.is_bk72xx:
         cg.add_library("WiFiClientSecure", None)
         cg.add_library("HTTPClient", None)
     if CORE.is_esp8266:

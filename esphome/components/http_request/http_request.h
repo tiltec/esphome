@@ -13,7 +13,7 @@
 #include <utility>
 #include <vector>
 
-#ifdef USE_ESP32
+#if defined(USE_ESP32) || defined(USE_BK72XX)
 #include <HTTPClient.h>
 #endif
 #ifdef USE_ESP8266

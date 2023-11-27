@@ -40,8 +40,8 @@ void HttpRequestComponent::send(const std::vector<HttpRequestResponseTrigger *> 
 
   bool begin_status = false;
   const String url = this->url_.c_str();
-#if defined(USE_ESP32) || (defined(USE_ESP8266) && USE_ARDUINO_VERSION_CODE >= VERSION_CODE(2, 6, 0))
-#if defined(USE_ESP32) || USE_ARDUINO_VERSION_CODE >= VERSION_CODE(2, 7, 0)
+#if defined(USE_ESP32) || defined(USE_BK72XX) || (defined(USE_ESP8266) && USE_ARDUINO_VERSION_CODE >= VERSION_CODE(2, 6, 0))
+#if defined(USE_ESP32) || defined(USE_BK72XX) || USE_ARDUINO_VERSION_CODE >= VERSION_CODE(2, 7, 0)
   if (this->follow_redirects_) {
     this->client_.setFollowRedirects(HTTPC_FORCE_FOLLOW_REDIRECTS);
   } else {
@@ -52,7 +52,7 @@ void HttpRequestComponent::send(const std::vector<HttpRequestResponseTrigger *> 
 #endif
   this->client_.setRedirectLimit(this->redirect_limit_);
 #endif
-#if defined(USE_ESP32)
+#if defined(USE_ESP32) || defined(USE_BK72XX)
   begin_status = this->client_.begin(url);
 #elif defined(USE_ESP8266)
   begin_status = this->client_.begin(*this->get_wifi_client_(), url);
@@ -66,7 +66,7 @@ void HttpRequestComponent::send(const std::vector<HttpRequestResponseTrigger *> 
   }
 
   this->client_.setTimeout(this->timeout_);
-#if defined(USE_ESP32)
+#if defined(USE_ESP32) || defined(USE_BK72XX)
   this->client_.setConnectTimeout(this->timeout_);
 #endif
   if (this->useragent_ != nullptr) {
@@ -125,7 +125,7 @@ void HttpRequestComponent::close() {
 }
 
 const char *HttpRequestComponent::get_string() {
-#if defined(ESP32)
+#if defined(ESP32) || defined(USE_BK72XX)
   // The static variable is here because HTTPClient::getString() returns a String on ESP32,
   // and we need something to keep a buffer alive.
   static String str;
