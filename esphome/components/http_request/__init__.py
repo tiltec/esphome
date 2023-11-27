@@ -101,7 +101,7 @@ async def to_code(config):
     if CORE.is_esp8266 and not config[CONF_ESP8266_DISABLE_SSL_SUPPORT]:
         cg.add_define("USE_HTTP_REQUEST_ESP8266_HTTPS")
 
-    if CORE.is_esp32 or CORE.is_bk72xx:
+    if CORE.is_esp32:
         cg.add_library("WiFiClientSecure", None)
         cg.add_library("HTTPClient", None)
     if CORE.is_esp8266:
