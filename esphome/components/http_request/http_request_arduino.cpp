@@ -75,7 +75,7 @@ std::shared_ptr<HttpContainer> HttpRequestArduino::perform(const std::string &ur
     container->client_.setInsecure();
   }
   bool status = container->client_.begin(url.c_str());
-#elif defined(USE_ESP32)
+#elif defined(USE_ESP32) || defined(USE_BK72XX)
   bool status = container->client_.begin(url.c_str());
 #endif
 
@@ -91,6 +91,8 @@ std::shared_ptr<HttpContainer> HttpRequestArduino::perform(const std::string &ur
   container->client_.setReuse(true);
   container->client_.setTimeout(this->timeout_);
 #if defined(USE_ESP32)
+  container->client_.setConnectTimeout(this->timeout_);
+#elif defined(USE_BK72XX)
   container->client_.setConnectTimeout(this->timeout_);
 #endif
 

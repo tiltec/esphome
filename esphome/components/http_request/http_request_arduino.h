@@ -4,7 +4,7 @@
 
 #ifdef USE_ARDUINO
 
-#if defined(USE_ESP32) || defined(USE_RP2040)
+#if defined(USE_ESP32) || defined(USE_RP2040) || defined(USE_BK72XX)
 #include <HTTPClient.h>
 #include <WiFiClient.h>
 #endif

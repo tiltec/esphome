@@ -96,7 +96,7 @@ def _declare_request_class(value):
         return cv.declare_id(HttpRequestHost)(value)
     if CORE.using_esp_idf:
         return cv.declare_id(HttpRequestIDF)(value)
-    if CORE.is_esp8266 or CORE.is_esp32 or CORE.is_rp2040:
+    if CORE.is_esp8266 or CORE.is_esp32 or CORE.is_rp2040 or CORE.is_bk72xx:
         return cv.declare_id(HttpRequestArduino)(value)
     return NotImplementedError
 
@@ -139,6 +139,7 @@ CONFIG_SCHEMA = cv.All(
         esp32_arduino=cv.Version(0, 0, 0),
         esp_idf=cv.Version(0, 0, 0),
         rp2040_arduino=cv.Version(0, 0, 0),
+        bk72xx_arduino=cv.Version(1, 9, 1),
         host=cv.Version(0, 0, 0),
     ),
     validate_ssl_verification,
